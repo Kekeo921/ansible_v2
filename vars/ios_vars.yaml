@@ -2,3 +2,9 @@
   local_username:
     - "cisco"
     - "not_cisco"
+  ntp_servers:
+    - "ntp server 10.0.0.1"
+    - "ntp server 10.10.0.1"
+  dns_servers:
+    - "ip name-server 10.0.0.2"
+    - "ip name-server 10.10.0.2"
