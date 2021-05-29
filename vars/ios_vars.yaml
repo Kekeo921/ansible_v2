@@ -1,0 +1,4 @@
+---
+  local_username:
+    - "cisco"
+    - "not_cisco"
