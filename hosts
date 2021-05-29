@@ -1,0 +1,9 @@
+[Company_1:children]
+Site_1
+
+[Site_1:vars]
+ansible_network_os=ios
+
+[Site_1]
+SW1 ansible_host=192.168.1.220
+

@@ -1,0 +1,12 @@
+- hosts: Company_1 
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  - name: Show ip interface brief
+    ios_command:
+     commands:
+       - show ip interface brief #use "show" command
+    register: ipbrief
+
+  - debug: var=ipbrief.stdout_lines
