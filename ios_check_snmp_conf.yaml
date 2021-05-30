@@ -1,0 +1,31 @@
+- hosts: Company_1 
+  gather_facts: false
+  connection: network_cli
+  vars_files:
+    - ./vars/ios_vars.yaml
+
+  tasks:
+  - name: Show running config
+    ios_command:
+     commands:
+       - show snmp user | i User
+       - show running-config
+    register: showrun
+
+
+  - name: get snmp view
+    set_fact: get_snmp_view="{{showrun.stdout[1] | regex_findall('snmp-server view.*', multiline=True) }}"
+  
+  - name: get snmp groups
+    set_fact: get_snmp_groups="{{showrun.stdout[1] | regex_findall('snmp-server group.*', multiline=True) }}"
+
+  - name: get snmp user
+    set_fact: get_snmp_users="{{showrun.stdout[0] | regex_findall('^User name. (\S+)', multiline=True) }}"
+
+  - name: get acl 10 - snmp v3
+    set_fact: get_acl_10="{{showrun.stdout[1] | regex_findall('^access-list 10 .*', multiline=True) }}"
+
+  - debug: var=get_snmp_view
+  - debug: var=get_snmp_groups
+  - debug: var=get_snmp_users
+  - debug: var=get_acl_10
