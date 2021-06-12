@@ -8,3 +8,4 @@ ansible_network_os=ios
 SW1 ansible_host=192.168.1.220
 
 [Site_2]
+PA1
