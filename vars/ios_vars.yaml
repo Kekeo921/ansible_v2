@@ -11,9 +11,10 @@
   snmp_view:
     - "snmp-server view view1 iso included"
   snmp_group:
-    - "snmp-server group group1 v3 priv read view1"
+    - "snmp-server group group1 v3 priv read view1 "
   snmp_user:
     - "user1"
   snmp_user_conf:
     - "snmp-server user user1 group1 v3 auth sha authpass priv aes 128 privpass access 10"
-    
+  acl_10:
+    - "access-list 10 permit 192.168.1.60"

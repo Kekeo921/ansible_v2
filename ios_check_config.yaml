@@ -90,6 +90,78 @@
     when: 'item not in dns_servers'
     with_items: "{{ get_dns_servers }}"
 
+##########################################################   SNMP  ############################################################################
+  - name: check snmp view
+    debug:
+      msg: "{{ item }} - OK"
+    when: 'item in get_snmp_view'
+    with_items: "{{ snmp_view }}"
+
+  - name: check if snmp view is missing
+    debug:
+      msg: "{{ item }} - MISSING"
+    when: 'item not in get_snmp_view'
+    with_items: "{{ snmp_view }}"
+
+  - name: check useless snmp view
+    debug:
+      msg: "{{ item }} - USELESS!"
+    when: 'item not in snmp_view'
+    with_items: "{{ get_snmp_view }}"
+
+  - name: check snmp group
+    debug:
+      msg: "{{ item }} - OK"
+    when: 'item in get_snmp_groups'
+    with_items: "{{ snmp_group }}"
+
+  - name: check if snmp group is missing
+    debug:
+      msg: "{{ item }} - MISSING"
+    when: 'item not in get_snmp_groups'
+    with_items: "{{ snmp_group }}"
+
+  - name: check useless snmp group
+    debug:
+      msg: "{{ item }} - USELESS!"
+    when: 'item not in snmp_group'
+    with_items: "{{ get_snmp_groups }}"
+
+  - name: check snmp users
+    debug:
+      msg: "snmp user: {{ item }} - OK"
+    when: 'item in get_snmp_users'
+    with_items: "{{ snmp_user }}"
+  
+  - name: check if snmp user is missing
+    debug:
+      msg: "snmp user: {{ item }} - MISSING"
+    when: 'item not in get_snmp_users'
+    with_items: "{{ snmp_user }}"
+  
+  - name: check useless snmp users
+    debug:
+      msg: "snmp user: {{ item }} - USELESS!"
+    when: 'item not in snmp_user'
+    with_items: "{{ get_snmp_users }}"
+
+  - name: check acl 10
+    debug:
+      msg: "{{ item }} - OK"
+    when: 'item in get_acl_10'
+    with_items: "{{ acl_10 }}"
+
+  - name: check if acl 10 is missing
+    debug:
+      msg: "{{ item }} - MISSING"
+    when: 'item not in get_acl_10'
+    with_items: "{{ acl_10 }}"
+
+  - name: check useless acl
+    debug:
+      msg: "{{ item }} - USELESS!"
+    when: 'item not in acl_10'
+    with_items: "{{ get_acl_10 }}"
 
 
   - debug: var=get_local_users
