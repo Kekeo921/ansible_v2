@@ -1,0 +1,266 @@
+PLAY [Company_1] ********************************************************************************************************************************************************
+
+TASK [Show running config] **********************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get local users] **************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get ntp servers] **************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get dns servers] **************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get snmp view] ****************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get snmp groups] **************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get snmp user] ****************************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [get acl 10 - snmp v3] *********************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [check local users] ************************************************************************************************************************************************
+ok: [SW1] => (item=cisco) => {
+    "msg": "local user: cisco - OK"
+}
+skipping: [SW1] => (item=not_cisco)
+ok: [R2] => (item=cisco) => {
+    "msg": "local user: cisco - OK"
+}
+ok: [R3] => (item=cisco) => {
+    "msg": "local user: cisco - OK"
+}
+skipping: [R2] => (item=not_cisco)
+skipping: [R3] => (item=not_cisco)
+
+TASK [check if local user is missing] ***********************************************************************************************************************************
+skipping: [SW1] => (item=cisco)
+skipping: [R2] => (item=cisco)
+skipping: [R3] => (item=cisco)
+ok: [SW1] => (item=not_cisco) => {
+    "msg": "local user: not_cisco - MISSING"
+}
+ok: [R2] => (item=not_cisco) => {
+    "msg": "local user: not_cisco - MISSING"
+}
+ok: [R3] => (item=not_cisco) => {
+    "msg": "local user: not_cisco - MISSING"
+}
+
+TASK [check useless local users] ****************************************************************************************************************************************
+skipping: [SW1] => (item=cisco)
+skipping: [R2] => (item=cisco)
+skipping: [R2]
+skipping: [R3] => (item=cisco)
+skipping: [R3]
+ok: [SW1] => (item=useless_user) => {
+    "msg": "local user: useless_user - USELESS!"
+}
+
+TASK [check ntp servers] ************************************************************************************************************************************************
+skipping: [R2] => (item=ntp server 10.0.0.1)
+skipping: [R2] => (item=ntp server 10.10.0.1)
+skipping: [R2]
+skipping: [R3] => (item=ntp server 10.0.0.1)
+ok: [SW1] => (item=ntp server 10.0.0.1) => {
+    "msg": "ntp server 10.0.0.1 - OK"
+}
+skipping: [SW1] => (item=ntp server 10.10.0.1)
+ok: [R3] => (item=ntp server 10.10.0.1) => {
+    "msg": "ntp server 10.10.0.1 - OK"
+}
+
+TASK [check if ntp server is missing] ***********************************************************************************************************************************
+skipping: [SW1] => (item=ntp server 10.0.0.1)
+ok: [SW1] => (item=ntp server 10.10.0.1) => {
+    "msg": "ntp server 10.10.0.1 - MISSING"
+}
+ok: [R2] => (item=ntp server 10.0.0.1) => {
+    "msg": "ntp server 10.0.0.1 - MISSING"
+}
+ok: [R2] => (item=ntp server 10.10.0.1) => {
+    "msg": "ntp server 10.10.0.1 - MISSING"
+}
+ok: [R3] => (item=ntp server 10.0.0.1) => {
+    "msg": "ntp server 10.0.0.1 - MISSING"
+}
+skipping: [R3] => (item=ntp server 10.10.0.1)
+
+TASK [check useless ntp servers] ****************************************************************************************************************************************
+skipping: [R3] => (item=ntp server 10.10.0.1)
+ok: [SW1] => (item=ntp server 20.0.0.1) => {
+    "msg": "ntp server 20.0.0.1 - USELESS!"
+}
+skipping: [SW1] => (item=ntp server 10.0.0.1)
+ok: [R3] => (item=ntp server 20.0.0.1) => {
+    "msg": "ntp server 20.0.0.1 - USELESS!"
+}
+
+TASK [check dns servers] ************************************************************************************************************************************************
+skipping: [R2] => (item=ip name-server 10.0.0.2)
+skipping: [R2] => (item=ip name-server 10.10.0.2)
+skipping: [R2]
+skipping: [R3] => (item=ip name-server 10.0.0.2)
+ok: [SW1] => (item=ip name-server 10.0.0.2) => {
+    "msg": "ip name-server 10.0.0.2 - OK"
+}
+skipping: [SW1] => (item=ip name-server 10.10.0.2)
+ok: [R3] => (item=ip name-server 10.10.0.2) => {
+    "msg": "ip name-server 10.10.0.2 - OK"
+}
+
+TASK [check if dns server is missing] ***********************************************************************************************************************************
+skipping: [SW1] => (item=ip name-server 10.0.0.2)
+ok: [SW1] => (item=ip name-server 10.10.0.2) => {
+    "msg": "ip name-server 10.10.0.2 - MISSING"
+}
+ok: [R2] => (item=ip name-server 10.0.0.2) => {
+    "msg": "ip name-server 10.0.0.2 - MISSING"
+}
+ok: [R2] => (item=ip name-server 10.10.0.2) => {
+    "msg": "ip name-server 10.10.0.2 - MISSING"
+}
+ok: [R3] => (item=ip name-server 10.0.0.2) => {
+    "msg": "ip name-server 10.0.0.2 - MISSING"
+}
+skipping: [R3] => (item=ip name-server 10.10.0.2)
+
+TASK [check useless dns servers] ****************************************************************************************************************************************
+skipping: [R3] => (item=ip name-server 10.10.0.2)
+ok: [SW1] => (item=ip name-server 20.0.0.2) => {
+    "msg": "ip name-server 20.0.0.2 - USELESS!"
+}
+skipping: [SW1] => (item=ip name-server 10.0.0.2)
+ok: [R3] => (item=ip name-server 20.0.0.2) => {
+    "msg": "ip name-server 20.0.0.2 - USELESS!"
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_local_users": [
+        "cisco",
+        "useless_user"
+    ]
+}
+ok: [R2] => {
+    "get_local_users": [
+        "cisco"
+    ]
+}
+ok: [R3] => {
+    "get_local_users": [
+        "cisco"
+    ]
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_ntp_servers": [
+        "ntp server 20.0.0.1",
+        "ntp server 10.0.0.1"
+    ]
+}
+ok: [R2] => {
+    "get_ntp_servers": []
+}
+ok: [R3] => {
+    "get_ntp_servers": [
+        "ntp server 10.10.0.1",
+        "ntp server 20.0.0.1"
+    ]
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_dns_servers": [
+        "ip name-server 20.0.0.2",
+        "ip name-server 10.0.0.2"
+    ]
+}
+ok: [R2] => {
+    "get_dns_servers": []
+}
+ok: [R3] => {
+    "get_dns_servers": [
+        "ip name-server 10.10.0.2",
+        "ip name-server 20.0.0.2"
+    ]
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_snmp_view": [
+        "snmp-server view view1 iso included"
+    ]
+}
+ok: [R2] => {
+    "get_snmp_view": []
+}
+ok: [R3] => {
+    "get_snmp_view": []
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [R2] => {
+    "get_snmp_groups": []
+}
+ok: [SW1] => {
+    "get_snmp_groups": [
+        "snmp-server group group1 v3 priv read view1 "
+    ]
+}
+ok: [R3] => {
+    "get_snmp_groups": []
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_snmp_users": [
+        "user1"
+    ]
+}
+ok: [R3] => {
+    "get_snmp_users": []
+}
+ok: [R2] => {
+    "get_snmp_users": []
+}
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "get_acl_10": [
+        "access-list 10 permit 192.168.1.60"
+    ]
+}
+ok: [R2] => {
+    "get_acl_10": []
+}
+ok: [R3] => {
+    "get_acl_10": []
+}
+
+PLAY RECAP **************************************************************************************************************************************************************
+R2                         : ok=19   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+R3                         : ok=23   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+SW1                        : ok=24   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

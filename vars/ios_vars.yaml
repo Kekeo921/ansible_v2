@@ -8,3 +8,12 @@
   dns_servers:
     - "ip name-server 10.0.0.2"
     - "ip name-server 10.10.0.2"
+  snmp_view:
+    - "snmp-server view view1 iso included"
+  snmp_group:
+    - "snmp-server group group1 v3 priv read view1"
+  snmp_user:
+    - "user1"
+  snmp_user_conf:
+    - "snmp-server user user1 group1 v3 auth sha authpass priv aes 128 privpass access 10"
+    
