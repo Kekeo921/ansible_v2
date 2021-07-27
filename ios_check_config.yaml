@@ -12,7 +12,7 @@
        - show running-config
     register: showrun
 
-#  - debug: var=showrun.stdout_lines
+  - debug: var=showrun.stdout_lines
 
   - name: get local users
     set_fact: get_local_users="{{showrun.stdout[1] | regex_findall('username (\S+)', multiline=True) }}"

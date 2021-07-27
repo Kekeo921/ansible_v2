@@ -1,0 +1,44 @@
+PLAY [SW1] **************************************************************************************************************************************************************
+
+TASK [Show running config] **********************************************************************************************************************************************
+ok: [SW1]
+
+TASK [check config] *****************************************************************************************************************************************************
+ok: [SW1] => (item=access-list 10 permit 192.168.1.60) => {
+    "msg": "access-list 10 permit 192.168.1.60 - OK"
+}
+ok: [SW1] => (item=ntp server 10.0.0.1) => {
+    "msg": "ntp server 10.0.0.1 - OK"
+}
+skipping: [SW1] => (item=ntp server 10.10.0.1)
+ok: [SW1] => (item=ip name-server 10.0.0.2) => {
+    "msg": "ip name-server 10.0.0.2 - OK"
+}
+skipping: [SW1] => (item=ip name-server 10.10.0.2)
+ok: [SW1] => (item=snmp-server view view1 iso included) => {
+    "msg": "snmp-server view view1 iso included - OK"
+}
+ok: [SW1] => (item=snmp-server group group1 v3 priv read view1 ) => {
+    "msg": "snmp-server group group1 v3 priv read view1  - OK"
+}
+ok: [SW1] => (item=access-list 10 permit 192.168.1.60) => {
+    "msg": "access-list 10 permit 192.168.1.60 - OK"
+}
+
+TASK [check config is missing] ******************************************************************************************************************************************
+skipping: [SW1] => (item=access-list 10 permit 192.168.1.60)
+skipping: [SW1] => (item=ntp server 10.0.0.1)
+ok: [SW1] => (item=ntp server 10.10.0.1) => {
+    "msg": "ntp server 10.10.0.1 - MISSING!!!"
+}
+skipping: [SW1] => (item=ip name-server 10.0.0.2)
+ok: [SW1] => (item=ip name-server 10.10.0.2) => {
+    "msg": "ip name-server 10.10.0.2 - MISSING!!!"
+}
+skipping: [SW1] => (item=snmp-server view view1 iso included)
+skipping: [SW1] => (item=snmp-server group group1 v3 priv read view1 )
+skipping: [SW1] => (item=access-list 10 permit 192.168.1.60)
+
+PLAY RECAP **************************************************************************************************************************************************************
+SW1                        : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
