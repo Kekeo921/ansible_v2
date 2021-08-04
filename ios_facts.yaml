@@ -1,0 +1,54 @@
+- hosts: Company_1
+  gather_facts: false
+  connection: network_cli
+#  strategy: free
+
+  tasks:
+    - name: gather router facts
+      ios_facts:
+        gather_subset:
+        - 'min'
+#        - '!interfaces'
+#        - '!hardware'
+#        - '!config'
+#        - 'all'
+#        gather_network_resources:
+#        - "!all"
+
+    - name: Print facts
+      debug:
+        msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+  
+    - name: Insert lines into a file
+      lineinfile:
+        path: /etc/ansible/ansible_v2/facts.csv
+        line: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+
+
+#    - name: view all ansible fact keys
+#      debug:
+#        var: ansible_facts.keys()
+#    
+#    - name: view iostype
+#      debug:
+#        var: ansible_net_iostype
+#    
+#    - name: view hostname
+#      debug:
+#        var: ansible_net_hostname
+#    
+#    - name: view image
+#      debug:
+#        var: ansible_net_image
+#    
+#    - name: view version
+#      debug:
+#        var: ansible_net_version
+#    
+#    - name: view system
+#      debug:
+#        var: ansible_net_system
+#    
+#    - name: view serialnum
+#      debug:
+#        var: ansible_net_serialnum

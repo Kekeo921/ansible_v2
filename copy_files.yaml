@@ -1,0 +1,17 @@
+- hosts: Centos
+  gather_facts: false
+#  connection: network_cli
+  tasks:
+    - name: copy file
+#      become: true
+      copy:
+        src: /usr/src/test
+        dest: /usr/src/
+        owner: apache
+        group: apache 
+        mode: '0664'
+
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted

@@ -11,11 +11,11 @@
        - show running-config
     register: showrun
 
-  - name: check config
-    debug:
-      msg: "{{ item }} - OK"
-    when: 'item in showrun.stdout[0]'
-    with_items: "{{ config }}"
+#  - name: check config
+#    debug:
+#      msg: "{{ item }} - OK"
+#    when: 'item in showrun.stdout[0]'
+#    with_items: "{{ config }}"
 
   - name: check config is missing
     debug:
