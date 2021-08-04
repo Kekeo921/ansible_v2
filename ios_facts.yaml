@@ -14,6 +14,16 @@
 #        - 'all'
 #        gather_network_resources:
 #        - "!all"
+    - name: Check that the facts.csv exists
+      stat:
+        path: /etc/ansible/ansible_v2/facts.csv
+      register: stat_result
+
+    - name: Create the file, if it doesnt exist
+      file:
+        path: /etc/ansible/ansible_v2/facts.csv
+        state: touch
+      when: not stat_result.stat.exists
 
     - name: Print facts
       debug:
