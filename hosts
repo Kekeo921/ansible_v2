@@ -1,17 +1,24 @@
 [Company_1:children]
 Site_1
+Site_2
+Site_3
 
-[Site_1:vars]
+[Company_1:vars]
 ansible_network_os=ios
 
 [Site_1]
 SW1 ansible_host=192.168.1.220
-R2 ansible_host=192.168.1.222
-R3 ansible_host=192.168.1.223
 
 [Site_2]
+R2 ansible_host=192.168.1.222
+
+[Site_3]
+R3 ansible_host=192.168.1.223
+
+[Site_4]
 PA1 ansible_host=192.168.1.231
 PA2 ansible_host=192.168.1.232
 
 [Centos]
 Lab-1 ansible_host=192.168.1.61
+Lab ansible_host=192.168.1.60

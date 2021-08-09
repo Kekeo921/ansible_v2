@@ -1,4 +1,4 @@
-- hosts: SW1
+- hosts: Company_1
   gather_facts: false
   connection: network_cli
   vars_files:
@@ -11,6 +11,8 @@
        - show running-config
     register: showrun
 
+
+########################################################## CLI Output ##########################################################################
 #  - name: check config
 #    debug:
 #      msg: "{{ item }} - OK"
@@ -20,5 +22,37 @@
   - name: check config is missing
     debug:
       msg: "{{ item }} - MISSING!!!"
+    when: 'item not in showrun.stdout[0]'
+    with_items: "{{ config }}"
+
+  - name: Check that the config_report file exists
+    stat:
+      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+    register: stat_result
+
+########################################################## file Output #########################################################################
+
+  - name: Delete the file, if it exists
+    file:
+      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      state: absent
+    when: stat_result.stat.exists
+
+  - name: Create new report file
+    file:
+      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      state: touch
+
+  - name: Insert matching lines into report
+    lineinfile:
+      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      line: "{{ item }} - OK"
+    when: 'item in showrun.stdout[0]'
+    with_items: "{{ config }}"
+
+  - name: create report
+    lineinfile:
+      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      line: "{{ item }} - Missing"
     when: 'item not in showrun.stdout[0]'
     with_items: "{{ config }}"

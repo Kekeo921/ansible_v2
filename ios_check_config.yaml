@@ -164,6 +164,24 @@
     with_items: "{{ get_acl_10 }}"
 
 
+##########################################################   Report ##########################################################################
+
+  - name: create report file
+    file:
+      path: /etc/ansible/ansible_v2/{{inventory_hostname}}_report
+      state: touch
+
+  - name: create report
+    lineinfile:
+      path: /etc/ansible/ansible_v2/{{inventory_hostname}}_report
+      line: "{{ item }} - OK"
+    when: 'item not in acl_10'
+    with_items: "{{ get_acl_10 }}"
+
+
+
+
+
   - debug: var=get_local_users
   - debug: var=get_ntp_servers
   - debug: var=get_dns_servers

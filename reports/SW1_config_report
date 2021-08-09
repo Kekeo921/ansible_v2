@@ -1,0 +1,7 @@
+access-list 10 permit 192.168.1.60 - OK
+ntp server 10.0.0.1 - OK
+ip name-server 10.0.0.2 - OK
+snmp-server view view1 iso included - OK
+snmp-server group group1 v3 priv read view1  - OK
+ntp server 10.10.0.1 - Missing
+ip name-server 10.10.0.2 - Missing

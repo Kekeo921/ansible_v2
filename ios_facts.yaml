@@ -2,7 +2,7 @@
   gather_facts: false
   connection: network_cli
 #  strategy: free
-
+#  serial: 1
   tasks:
     - name: gather router facts
       ios_facts:
@@ -14,25 +14,32 @@
 #        - 'all'
 #        gather_network_resources:
 #        - "!all"
-    - name: Check that the facts.csv exists
-      stat:
-        path: /etc/ansible/ansible_v2/facts.csv
-      register: stat_result
-
-    - name: Create the file, if it doesnt exist
-      file:
-        path: /etc/ansible/ansible_v2/facts.csv
-        state: touch
-      when: not stat_result.stat.exists
+#    - name: Check that the facts.csv exists
+#      stat:
+#        path: /etc/ansible/ansible_v2/facts.csv
+#      register: stat_result
+#
+#    - name: Create the file, if it doesnt exist
+#      file:
+#        path: /etc/ansible/ansible_v2/facts.csv
+#        state: touch
+#      when: not stat_result.stat.exists
 
     - name: Print facts
       debug:
         msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
   
-    - name: Insert lines into a file
-      lineinfile:
-        path: /etc/ansible/ansible_v2/facts.csv
-        line: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+#    - name: Insert lines into a file
+#      lineinfile:
+#        path: /etc/ansible/ansible_v2/facts.csv
+#        line: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+
+    - name: Write facts to a file
+      template:
+        src: /etc/ansible/ansible_v2/templates/template.j2
+        dest: /etc/ansible/ansible_v2/facts.csv
+      delegate_to: localhost
+#      run_once: yes
 
 
 #    - name: view all ansible fact keys

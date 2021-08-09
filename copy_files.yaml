@@ -1,17 +1,23 @@
-- hosts: Centos
+- hosts: Lab-1
   gather_facts: false
 #  connection: network_cli
   tasks:
     - name: copy file
-#      become: true
+      become: true
       copy:
-        src: /usr/src/test
-        dest: /usr/src/
+        src: /home/kekeo/testfile
+        dest: /etc/httpd/
         owner: apache
         group: apache 
         mode: '0664'
 
-    - name: restart httpd service
-      service:
-        name: httpd
-        state: restarted
+##    - name: restart httpd service
+##      service:
+##        name: httpd
+##        state: restarted
+#     - name: shell command
+#       shell: 
+#         "date"
+#       register: data
+#
+#     - debug: var=data.stdout
