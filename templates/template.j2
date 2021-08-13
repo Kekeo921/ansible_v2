@@ -1,3 +1,4 @@
+Hostname,IOS version,SN
 {% for item in play_hosts %}
 {{  hostvars[item]['ansible_net_hostname'] }},{{  hostvars[item]['ansible_net_version'] }},{{  hostvars[item]['ansible_net_serialnum'] }}
 {% endfor %}

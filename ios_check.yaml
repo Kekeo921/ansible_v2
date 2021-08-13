@@ -27,7 +27,7 @@
 
   - name: Check that the config_report file exists
     stat:
-      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      path: ./reports/{{inventory_hostname}}_config_report
     register: stat_result
 
 ########################################################## file Output #########################################################################
@@ -40,19 +40,19 @@
 
   - name: Create new report file
     file:
-      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      path: ./reports/{{inventory_hostname}}_config_report
       state: touch
 
   - name: Insert matching lines into report
     lineinfile:
-      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      path: ./reports/{{inventory_hostname}}_config_report
       line: "{{ item }} - OK"
     when: 'item in showrun.stdout[0]'
     with_items: "{{ config }}"
 
   - name: create report
     lineinfile:
-      path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_config_report
+      path: ./reports/{{inventory_hostname}}_config_report
       line: "{{ item }} - Missing"
     when: 'item not in showrun.stdout[0]'
     with_items: "{{ config }}"

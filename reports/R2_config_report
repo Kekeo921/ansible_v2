@@ -2,6 +2,3 @@ access-list 10 permit 192.168.1.60 - Missing
 ntp server 10.0.0.1 - Missing
 ntp server 10.10.0.1 - Missing
 ip name-server 10.0.0.2 - Missing
-ip name-server 10.10.0.2 - Missing
-snmp-server view view1 iso included - Missing
-snmp-server group group1 v3 priv read view1  - Missing

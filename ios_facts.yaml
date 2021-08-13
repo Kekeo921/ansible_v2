@@ -1,4 +1,4 @@
-- hosts: Company_1
+- hosts: Site_1,Site_2
   gather_facts: false
   connection: network_cli
 #  strategy: free
@@ -27,7 +27,8 @@
 
     - name: Print facts
       debug:
-        msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+        msg: "{{ ansible_net_hostname }},{{ ansible_net_version }},{{ ansible_net_serialnum }}"
+#        msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
   
 #    - name: Insert lines into a file
 #      lineinfile:
@@ -36,10 +37,10 @@
 
     - name: Write facts to a file
       template:
-        src: /etc/ansible/ansible_v2/templates/template.j2
-        dest: /etc/ansible/ansible_v2/facts.csv
+        src: ./templates/template.j2
+        dest: ./reports/facts.csv
       delegate_to: localhost
-#      run_once: yes
+      run_once: yes
 
 
 #    - name: view all ansible fact keys
