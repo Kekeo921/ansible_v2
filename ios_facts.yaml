@@ -8,11 +8,12 @@
       ios_facts:
         gather_subset:
         - 'min'
-#        - '!interfaces'
-#        - '!hardware'
-#        - '!config'
-#        - 'all'
-#        gather_network_resources:
+        - 'interfaces'
+        - '!hardware'
+        - 'config'
+        - 'all'
+        gather_network_resources:
+#        - "interfaces"
 #        - "!all"
 #    - name: Check that the facts.csv exists
 #      stat:
@@ -25,35 +26,35 @@
 #        state: touch
 #      when: not stat_result.stat.exists
 
-    - name: Print facts
+#    - name: Print facts
+#      debug:
+#        msg: "{{ ansible_net_hostname }},{{ ansible_net_version }},{{ ansible_net_serialnum }}"
+##        msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+#  
+##    - name: Insert lines into a file
+##      lineinfile:
+##        path: /etc/ansible/ansible_v2/facts.csv
+##        line: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
+#
+#    - name: Write facts to a file
+#      template:
+#        src: ./templates/template.j2
+#        dest: ./reports/facts.csv
+#      delegate_to: localhost
+#      run_once: yes
+
+
+    - name: view all ansible fact keys
       debug:
-        msg: "{{ ansible_net_hostname }},{{ ansible_net_version }},{{ ansible_net_serialnum }}"
-#        msg: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
-  
-#    - name: Insert lines into a file
-#      lineinfile:
-#        path: /etc/ansible/ansible_v2/facts.csv
-#        line: "{{ ansible_net_hostname }},{{ ansible_net_iostype }},{{ ansible_net_version }},{{ ansible_net_system }},{{ ansible_net_serialnum }},{{ ansible_net_image }}"
-
-    - name: Write facts to a file
-      template:
-        src: ./templates/template.j2
-        dest: ./reports/facts.csv
-      delegate_to: localhost
-      run_once: yes
-
-
-#    - name: view all ansible fact keys
-#      debug:
-#        var: ansible_facts.keys()
+        var: ansible_facts.keys()
 #    
-#    - name: view iostype
-#      debug:
-#        var: ansible_net_iostype
+    - name: view iostype
+      debug:
+        var: ansible_net_interfaces
 #    
-#    - name: view hostname
-#      debug:
-#        var: ansible_net_hostname
+    - name: view hostname
+      debug:
+        var: ansible_network_resources
 #    
 #    - name: view image
 #      debug:

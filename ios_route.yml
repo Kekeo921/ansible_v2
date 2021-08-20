@@ -1,0 +1,24 @@
+- hosts: R2,R3
+  gather_facts: false
+  connection: network_cli
+
+
+  tasks:
+  - name: Show ip route
+    ios_command:
+     commands:
+       - show ip route
+    register: showroute
+
+  - debug: var=showroute.stdout_lines
+
+
+  - name: check hosts table directory
+    file:
+      path: "./tables/{{ inventory_hostname }}"
+      state: directory
+    
+  - name: create routing table file 
+    copy:
+      content: "{{ showroute.stdout[0] }}"
+      dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table.txt"
