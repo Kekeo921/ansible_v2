@@ -21,4 +21,4 @@
   - name: create routing table file 
     copy:
       content: "{{ showroute.stdout[0] }}"
-      dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table.txt"
+      dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table"
