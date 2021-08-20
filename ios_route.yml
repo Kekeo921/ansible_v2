@@ -1,4 +1,4 @@
-- hosts: R2,R3
+- hosts: R3
   gather_facts: false
   connection: network_cli
 
