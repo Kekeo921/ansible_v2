@@ -20,5 +20,17 @@
     - name: get git commits
       set_fact: get_git_commits="{{ gitchanges.stdout | regex_findall('^.*(tables/../.*routing_table).*', multiline=True) }}"
 
-
     - debug: var=get_git_commits
+
+    - name: commit and push
+      shell: |
+        git add {{ item }}  --all
+        git commit -m "changes in {{ item }}"
+        git push origin master
+      args:
+        chdir: "{{ git }}"
+      delegate_to: localhost
+      run_once: yes
+      with_items: "{{ get_git_commits }}"
+      register: commit
+
