@@ -1,24 +1,30 @@
-- hosts: R3
+- hosts: R2,R3
   gather_facts: false
   connection: network_cli
 
 
   tasks:
-  - name: Show ip route
-    ios_command:
-     commands:
-       - show ip route
-    register: showroute
+    - name: Show ip route
+      ios_command:
+       commands:
+         - show ip route
+      register: showroute
 
-  - debug: var=showroute.stdout_lines
-
-
-  - name: check hosts table directory
-    file:
-      path: "./tables/{{ inventory_hostname }}"
-      state: directory
+#    - debug: var=showroute.stdout
     
-  - name: create routing table file 
-    copy:
-      content: "{{ showroute.stdout[0] }}"
-      dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table"
+
+    - name: check hosts table directory
+      file:
+        path: "./tables/{{ inventory_hostname }}"
+        state: directory
+      
+    - name: create routing table file 
+      copy:
+        content: "{{ showroute.stdout[0] }}"
+        dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table"
+
+    - name: "Replace time in a file to a fixed value"
+      replace: 
+        path: ./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_routing_table
+        regexp: '[0-9]{2}:[0-9]{2}:[0-9]{2}'
+        replace: 'TIMESTAMP'
