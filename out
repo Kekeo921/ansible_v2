@@ -1,0 +1,47 @@
+PLAY [Company_1] ********************************************************************************************************************************************************
+
+TASK [Show ip interface brief] ******************************************************************************************************************************************
+ok: [SW1]
+ok: [R2]
+ok: [R3]
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [SW1] => {
+    "ipbrief.stdout_lines": [
+        [
+            "Interface              IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0            unassigned      YES unset  up                    up      ",
+            "Ethernet0/1            unassigned      YES unset  up                    up      ",
+            "Ethernet0/2            unassigned      YES unset  up                    up      ",
+            "Ethernet0/3            unassigned      YES unset  up                    up      ",
+            "Vlan10                 192.168.1.220   YES NVRAM  up                    up"
+        ]
+    ]
+}
+ok: [R2] => {
+    "ipbrief.stdout_lines": [
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                30.0.0.1        YES NVRAM  up                    up      ",
+            "Ethernet0/1                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet0/2                192.168.1.222   YES NVRAM  up                    up      ",
+            "Ethernet0/3                unassigned      YES NVRAM  administratively down down"
+        ]
+    ]
+}
+ok: [R3] => {
+    "ipbrief.stdout_lines": [
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                40.0.0.1        YES NVRAM  up                    up      ",
+            "Ethernet0/1                192.168.1.223   YES NVRAM  up                    up      ",
+            "Ethernet0/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet0/3                unassigned      YES NVRAM  administratively down down"
+        ]
+    ]
+}
+
+PLAY RECAP **************************************************************************************************************************************************************
+R2                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+R3                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+SW1                        : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
