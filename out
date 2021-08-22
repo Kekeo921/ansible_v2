@@ -119,3 +119,28 @@ R3                         : ok=3    changed=0    unreachable=0    failed=0    s
 
 
 
+root@localhost:ansible/git ‹master›# ansible-playbook ios_prompt_4_command.yaml -u cisco -k --limit R3
+SSH password:
+What is your "show" command?: show ip int br
+
+PLAY [Company_1] ********************************************************************************************************************************************************
+
+TASK [Run command] ******************************************************************************************************************************************************
+ok: [R3]
+
+TASK [debug] ************************************************************************************************************************************************************
+ok: [R3] => {
+    "showcommand.stdout_lines": [
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                40.0.0.1        YES NVRAM  up                    up      ",
+            "Ethernet0/1                192.168.1.223   YES NVRAM  up                    up      ",
+            "Ethernet0/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet0/3                unassigned      YES NVRAM  administratively down down"
+        ]
+    ]
+}
+
+PLAY RECAP **************************************************************************************************************************************************************
+R3                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
