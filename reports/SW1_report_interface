@@ -1,5 +1,5 @@
-Ethernet0/1,up
-Ethernet0/0,up
-Ethernet0/3,up
-Ethernet0/2,up
-Vlan10,up
+Vlan10,,up,up,192.168.1.220,24,1000000,
+Ethernet0/1,,up,,NONE,NONE,10000,
+Ethernet0/0,,up,,NONE,NONE,10000,
+Ethernet0/3,,up,,NONE,NONE,10000,
+Ethernet0/2,,up,,NONE,NONE,10000,

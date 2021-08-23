@@ -1,6 +1,7 @@
-- hosts: Site_1,Site_2
+- hosts: Company_1
   gather_facts: false
   connection: network_cli
+  any_errors_fatal: true
 #  strategy: free
 #  serial: 1
   tasks:
@@ -42,20 +43,20 @@
 #        dest: ./reports/facts.csv
 #      delegate_to: localhost
 #      run_once: yes
-
-
-    - name: view all ansible fact keys
-      debug:
-        var: ansible_facts.keys()
-#    
-    - name: view iostype
-      debug:
-        var: ansible_net_interfaces
-#    
-    - name: view hostname
-      debug:
-        var: ansible_network_resources
-#    
+#
+#
+#    - name: view all ansible fact keys
+#      debug:
+#        var: ansible_facts.keys()
+##    
+#    - name: view iostype
+#      debug:
+#        var: ansible_net_interfaces
+##    
+#    - name: view hostname
+#      debug:
+#        var: ansible_network_resources
+##    
 #    - name: view image
 #      debug:
 #        var: ansible_net_image
@@ -86,12 +87,23 @@
       with_dict:
        - "{{ ansible_net_interfaces }}"
 
+    - name: Check that the config_report file exists
+      stat:
+        path: ./reports/{{inventory_hostname}}_report_interface
+      register: stat_result
+  
     - name: Display all interface data v2
       debug:
          msg: "{{ item.key }},{{item.value.operstatus}}"
       with_dict:
        - "{{ ansible_net_interfaces }}"
-      when: item.value.operstatus == "up"
+      when: item.value.ipv4.0.address is defined
+
+    - name: Delete the file, if it exists
+      file:
+        path: /etc/ansible/ansible_v2/reports/{{inventory_hostname}}_report_interface
+        state: absent
+      when: stat_result.stat.exists
 
     - name: Create new report file
       file:
@@ -101,7 +113,17 @@
     - name: create report
       lineinfile:
         path: ./reports/{{inventory_hostname}}_report_interface
-        line: "{{ item.key }},{{item.value.description}},{{item.value.bandwidth}},{{item.value.duplex}},{{item.value.ipv4.0.address}},{{item.value.ipv4.0.subnet}}"
+        line: "{{ item.key }},{{item.value.description}},{{item.value.operstatus}},{{item.value.lineprotocol}},{{item.value.ipv4.0.address}},{{item.value.ipv4.0.subnet}},{{item.value.bandwidth}},{{item.value.duplex}}"
       with_dict:
        - "{{ ansible_net_interfaces }}"
-      when: item.value.operstatus == "up"
+      when: item.value.ipv4.0.address is defined
+
+    - name: create report 2nd
+      lineinfile:
+        path: ./reports/{{inventory_hostname}}_report_interface
+        line: "{{ item.key }},{{item.value.description}},{{item.value.operstatus}},{{item.value.lineprotocol}},NONE,NONE,{{item.value.bandwidth}},{{item.value.duplex}}"
+      with_dict:
+       - "{{ ansible_net_interfaces }}"
+      when: item.value.ipv4.0.address is not defined
+
+

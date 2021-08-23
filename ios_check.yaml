@@ -25,12 +25,11 @@
     when: 'item not in showrun.stdout[0]'
     with_items: "{{ config }}"
 
+########################################################## file Output #########################################################################
   - name: Check that the config_report file exists
     stat:
       path: ./reports/{{inventory_hostname}}_config_report
     register: stat_result
-
-########################################################## file Output #########################################################################
 
   - name: Delete the file, if it exists
     file:

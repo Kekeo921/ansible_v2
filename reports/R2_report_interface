@@ -1,4 +1,4 @@
-Ethernet0/0,up
-Ethernet0/2,up
-Ethernet0/0,,10000,,30.0.0.1,24
-Ethernet0/2,,10000,,192.168.1.222,24
+Ethernet0/0,TO_LAB,up,up,30.0.0.1,24,10000,
+Ethernet0/2,TO_LAN,up,up,192.168.1.222,24,10000,
+Ethernet0/1,,administratively down,down,NONE,NONE,10000,
+Ethernet0/3,,administratively down,down,NONE,NONE,10000,
