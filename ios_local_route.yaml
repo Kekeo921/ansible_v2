@@ -1,6 +1,8 @@
 - hosts: Company_1
   gather_facts: false
   connection: network_cli
+  vars:
+    ip: 50.0
 #  serial: 1
 
 
@@ -11,21 +13,21 @@
          - show ip route
       register: showroute
   
-  
     - name: get local routes
-      set_fact: get_local_routes="{{showroute.stdout[0] | regex_findall('^L.*', multiline=True) }}"
-  
+      set_fact: get_local_routes="{{showroute.stdout[0] | regex_search('(^L.*' + ip | string + '.*)', multiline=True) }}"   
+#      set_fact: get_local_routes="{{showroute.stdout[0] | regex_findall('^L.*', multiline=True) }}"
+      
     - name: print 
       debug:
         msg: "{{ get_local_routes }}"
 
-    - name: check hosts table directory
-      file:
-        path: "./tables/{{ inventory_hostname }}"
-        state: directory
-
-    - name: create file 
-      copy:
-        content: "{{ get_local_routes | to_nice_yaml }}"
-        dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_local_routes"
+#    - name: check hosts table directory
+#      file:
+#        path: "./tables/{{ inventory_hostname }}"
+#        state: directory
+#
+#    - name: create file 
+#      copy:
+#        content: "{{ get_local_routes | to_nice_yaml }}"
+#        dest: "./tables/{{ inventory_hostname }}/{{ inventory_hostname }}_local_routes"
 
