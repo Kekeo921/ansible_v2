@@ -1,5 +1,5 @@
 SW1
-#[[u'logging host 10.0.0.150']]
+#[[u'logging host 10.0.0.150', u'logging host 20.0.0.150']]
 R2
 #[[u'']]
 R3
