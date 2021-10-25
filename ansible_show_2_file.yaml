@@ -1,0 +1,21 @@
+- hosts: Company_1 
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+
+
+  - name: run commands
+    ios_command:
+     commands:
+       - show run | i logging host
+    register: commands
+
+  - debug: var=commands.stdout_lines[0]
+
+  - name: Write facts to a file
+    template:
+      src: ./templates/show_command_templ.j2
+      dest: ./reports/show_command
+    delegate_to: localhost
+    run_once: yes

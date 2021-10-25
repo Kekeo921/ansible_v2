@@ -1,0 +1,4 @@
+{% for host in ansible_play_hosts_all %}
+{{host}}
+#{{hostvars[host]['commands']['stdout_lines'] }}
+{% endfor %}
