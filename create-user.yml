@@ -1,0 +1,49 @@
+- hosts: lab3
+  gather_facts: false
+#  connection: local
+  vars:
+    username: test3
+
+  tasks:
+
+    - name: Create a login user
+      user:
+        name: "{{ username }}"
+        state: present
+#        password: "{{ 'pass2' | password_hash('sha512') }}"
+        system: no             # Defaults to no
+        createhome: yes        # Defaults to yes 
+
+    - name: Create .ssh directory
+      file:
+        path: /home/{{ username }}/.ssh
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: '0700'
+        state: directory
+
+#    - name: copy private key
+#      copy:
+#        src: "/home/{{ username }}/.ssh/id_rsa"
+#        dest: "/home/{{ username }}/.ssh/id_rsa"
+#        owner: "{{ username }}"
+#        group: "{{ username }}"
+#        mode: '0600'
+
+    - name: copy public key
+      copy:
+        src: "/home/{{ username }}/.ssh/id_rsa.pub"
+        dest: "/home/{{ username }}/.ssh/authorized_keys"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: '0600'
+
+
+    - name: sudo without password for wheel group
+      copy:
+        content: |
+          %{{username}} ALL=(ALL) NOPASSWD: /bin/su - root, /bin/su - root -c *
+        dest: /etc/sudoers.d/{{ username }}
+        owner: root
+        group: root        
+        mode: '0640'
