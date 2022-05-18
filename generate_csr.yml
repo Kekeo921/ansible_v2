@@ -1,0 +1,21 @@
+- hosts: Lab
+  gather_facts: false
+  connection: local
+#  connection: network_cli
+  tasks:
+    - name: Generate private RSA
+      openssl_privatekey:
+       path: /root/keys/lab1.local.pem
+       type: RSA
+       size: 4096
+      register: privatekey
+
+    - name: generate CSR
+      openssl_csr:
+        path: /root/keys/lab1.local.csr
+        privatekey_path: /root/keys/lab1.local.pem
+        country_name: PL
+        organization_name: LAB
+        email_address: lab1@local.com
+        common_name: lab1.local
+        subject_alt_name: 'DNS:192.168.1.60,DNS:lab1.local'
