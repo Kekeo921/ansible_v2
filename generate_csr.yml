@@ -19,3 +19,6 @@
         email_address: lab1@local.com
         common_name: lab1.local
         subject_alt_name: 'DNS:192.168.1.60,DNS:lab1.local'
+
+
+###openssl req -text -in /root/keys/lab1.local.csr
